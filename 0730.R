@@ -101,9 +101,15 @@ dt <- c('1-5-17', '18-7-20')
 dt1 <- as.Date(dt, '%d-%m-%y')
 dt1
 
+x <- c(1,3,5,7)
+y <- c(3,5)
 
-
-
+#합집합
+union(x,y)
+#교집합
+intersect(x,y)
+#차집합
+setdiff(x,y)
 
 
 
