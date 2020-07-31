@@ -102,10 +102,9 @@ df_user <- data.frame(name = c('최민수','유관순','이순신','김유신','
 install.packages("ggplot2")
 library(ggplot2)
 qplot(data = df_user, x = gender)
-df_user$gender <- factor(df_user$gender, levels=c("남자","여자"))
-df_user$gender <- as.factor(df_user$gender)
-barplot(df_user$gender)
 barplot(table(df_user$gender))
+plot(as.factor(user$gender))
+plot(iris)
 #########################################3
 df_score <- data.frame(kor = c(90, 85, 90),
                        eng = c(70, 85,75),
@@ -139,3 +138,78 @@ arr[,2,1]
 arr[1,1,3]
 #모든 매트릭스의 2행 2열
 arr[2,2,]
+
+##리스트##
+li<-list(name = c("GilDong", "SeDol"),
+         age = c(30, 35),
+         job = c("SalesManager", "GoPro"))
+li
+
+li$name[2]
+
+li[2]
+li[[2]] + 1
+#[]와 [[]]는 출력되는 형태가 다르다!
+
+df <- data.frame(name = c("GilDong", "SeDol"),
+                 age = c(30,35),
+                 job = c("SalesManager", "Gopro"))
+#길동의 나이, 직업을 인덱싱
+df[1,]
+df[1, c("name", "age", "job")]
+
+#데이터의 이름 컬럼 추출
+df[,1]
+df[,"name"]
+df$name
+df$n
+
+
+# ##데이터 다루기 기본함수
+# 우리가 다루는 데이터의 대부분은 데이터프레임 형식으로 돼 있다.
+# 대다수의 데이터가 수치, 문자열, 팩터의 자료형을
+# 혼합하여 가지고 있기 때문이다. 따라서 데이터프레임을 예로 들어
+# 데이터를 다루기 위한 구체적인 기능들을 알아보자.
+
+#행 또는 열을 추가할 때 : rbind, cbind
+
+help(rbind)
+help(cbind)
+new_mem <- data.frame(name = c("Heungmin", "Hyunjin", "Jisung", "ChanHo"),
+                      age = c(27, 31, 40, 45),
+                      job = c("Footballplayer", "Baseballplayer",
+                              "FootBallplayer", "Baseballplayer"))
+df <- rbind(df, new_mem)
+df
+
+new_nat <- data.frame(nationality = c("Korea", "Korea", "Korea", "Korea", "Korea", "KOrea"))
+df <- cbind(df, new_nat)
+str(df)
+
+#cbind 보다는 아래 방법을 더 많이 쓴다!
+df$city <- c("한양", "서울", "토튼햄", "로스앤젤레스", "서울", "서울")
+df
+
+
+#성 컬럼 추가
+df$surname <- c("Hong", "Lee", "Son", "Ryu", "Park", "Park")
+df
+
+#거주도시를 영문으로 변경
+df$city <- c("Hanyang", "Seoul", "Tottenham", "LosAngeles", "Seoul", "Seoul")
+df
+
+#길동의 나이를 34세로 변경
+df[1,2] <- 34
+df
+
+# 길동의 국적을 chosun으로 변경
+df$nationality <- as.character(df$nationality)
+df[1, 4] <- "chosun"
+df
+
+Sys.setenv(JAVA_HOME = 'C:\\Program Files\\Java\\jre1.8.0_251')
+install.packages(c('rJava', 'xlsx'))
+
+library(rJava)
+library(xlsx)
