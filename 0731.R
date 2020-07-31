@@ -213,3 +213,123 @@ install.packages(c('rJava', 'xlsx'))
 
 library(rJava)
 library(xlsx)
+student <- read.table(file=
+      'C:\\rsource\\Rdata\\student.txt', sep = "", header = F)
+student
+#맨 위에 컬럼명이 있다면 header가 True라고 알려줘야 한다!
+# sep : seperate!(파이썬으로 따지면 split?)
+
+a <- runif(10)
+a
+
+seque <- 1:10
+
+a_df <- data.frame(num=a, sequence = seque)
+a_df
+
+order(a_df$num, decreasing = T)
+#인덱스 값이 반환된다.
+
+b <- a_df[order(a_df$num, decreasing = T),]
+b
+#R에서는 경로를 들어갈때 \\를 쓴다.
+student1 <- read.table(file=
+            'C:\\rsource\\Rdata\\student1.txt', sep = "", header = T)
+student1
+student2 <- read.table(file=
+            'C:\\rsource\\Rdata\\student2.txt', sep = ";", header = T)
+student2
+
+head(student2,2)
+#head함수를 활용해서 data frame의 원하는 행만큼 출력할 수 있다.(default = 6)
+
+View(student2)
+
+setwd('C:\\rsource\\Rdata') #경로를 미리 설정해 줄 수 있다!
+#set working directory
+student1_1 <- read.table(file = 'student1.txt', header = TRUE, sep = '')
+student1_1
+
+student1_2 <- read.table(file = file.choose(), header = TRUE)
+
+
+##dataframe을 tibble로 바꾸면 상위 10개만 출력해준다.
+install.packages('tibble')
+library(tibble)
+
+iris_df <- iris
+iris_df1 <- as_tibble(iris_df)
+iris_df1
+
+#vignette을 이용해 패키지의 정보를 볼 수 이따.
+vignette('tibble')
+
+student3 <- read.table(file = 'student3.txt', header = TRUE, sep = '', na.strings='-')#-을 NA로 처리해서 읽어온다.
+student3
+student3[3,4]
+
+student4 <- read.table(file = 'student4.txt', header = TRUE, sep = ',', na.strings=c('-', '+', '$'))
+student4
+
+####엑셀파일
+library(xlsx)
+studentex <- read.xlsx('studentexcel.xlsx', sheetIndex = 1, encoding = "UTF-8")
+studentex
+
+USArrests
+USArrests_df <- USArrests
+USArrests_df
+
+USArrests_df$murder_pop <- USArrests$Murder / USArrests$UrbanPop
+USArrests_df <- tibble::rownames_to_column(USArrests_df)
+USArrests_df
+rank <- USArrests_df[order(USArrests_df$murder_pop, decreasing = T),]
+barplot(rank$murder_pop[1:7], names.arg = rank$rowname[1:7], 
+        col=rainbow(7), xlab ='state', ylab='murder/pop', 
+        main = '인구밀도대비 살인율')
+
+
+####문자열처리
+install.packages("stringr")
+library(stringr)
+
+형식) str_extract('문자열', '정규표현식')
+
+#연속으로 나오는 2개 숫자 추출 1개만
+str_extract("홍길동35이순신45유관순25", "[0-9]{2}")
+#연속으로 나오는 2개 숫자 추출 전부 다다
+str_extract_all("홍길동35이순신45유관순25", "[0-9]{2}")
+
+unlist(str_extract_all("홍길동35이순신45우관순25", "[0-9]{2}"))
+#unlist로 list의 형태를 풀어준다!->벡터가 된다.
+
+string <- 'hongkildong105lee1002you25강감찬2005'
+str_extract_all(string, '[a-z]{3}')
+str_extract_all(string, '[a-z]{3,}')
+str_extract_all(string, '[a-z]{3,5}')
+
+string1 <- 'YEShongkildong105lee1002you25강감찬2005'
+str_extract_all(string1, '[A-z]{3}')
+str_extract_all(string, 'hong')
+str_extract_all(string, '25')
+str_extract_all(string, '[가-힣]{3}')
+str_extract_all(string, '[a-z]{3}')
+#파이썬의 replace 같은거
+gsub('영', "0", '홍영기')
+gsub('영', "", '홍영기')
+#영어 소문자 제외하고 추출
+str_extract_all(string1, '[^a-z]{1,}')
+#영어 소문자 제외, 4개 연속 붙은 것 추출
+str_extract_all(string1, '[^a-z]{4}')
+#한글제외, 5개 연속 붙은것
+str_extract_all(string1, '[^가-힣]{5}')
+
+jumin <- '123456-3234567654321-3589621'
+unlist(str_extract_all(jumin,'[0-9]{6}-[0-9]{7}'))
+
+name<-'홍길동1234,이순신5678,강감찬1012'
+nm <- unlist(str_extract_all(name, '[가-힣]{3}'))
+num<- unlist(str_extract_all(name, '[0-9]{4}'))
+
+name_df <- data.frame(이름 = c(nm), 학번 = c(num))
+name_df
