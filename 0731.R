@@ -333,3 +333,12 @@ num<- unlist(str_extract_all(name, '[0-9]{4}'))
 
 name_df <- data.frame(이름 = c(nm), 학번 = c(num))
 name_df
+
+mat <- matrix(1:6, ncol = 2)
+mat
+
+a<-data.frame(mat, 7:9)
+a
+
+b<- as.data.frame(mat, 7:9)
+b
